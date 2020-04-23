@@ -1,4 +1,9 @@
-
- <div *ngFor="let mov of movie | async">
-    {{mov.name}} 
- </div>
+<h4>NgFor (grouped)</h4>
+ <ul *ngFor="let auth of author | async">  
+   <li>{{ auth.name }}</li>
+   <ul>
+    <li *ngFor="let mov of auth.movies">  
+      {{ mov.name }}
+    </li>
+   </ul>
+ </ul>

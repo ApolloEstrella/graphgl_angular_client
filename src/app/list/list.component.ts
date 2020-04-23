@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators'
 
 import gql from "graphql-tag"
 
-import { Movie, Query } from '../types'
+import { Movie, Author, Query, QueryAllAuthors } from '../types'
 
 
 @Component({
@@ -15,26 +15,30 @@ import { Movie, Query } from '../types'
 })
 export class ListComponent implements OnInit {
   movie: Observable<Movie[]>
+  author: Observable<Author[]>
   constructor(private apollo: Apollo) { }
 
   ngOnInit(): void {
-  this.movie = this.apollo.watchQuery<Query>({
+  this.author = this.apollo.watchQuery<any>({
        query: gql`
-         query allMovie {
-           movies {
-             id 
-             name
-             score
-           }
-         }     
-       `
+   query  {
+  allAuthors {
+    name
+    email
+    movies {
+      name
+    }
+  }
+}
+`
        })
        .valueChanges
        .pipe(
-         map(result => result.data['movies'])
+         map(result => result.data['allAuthors'])
        )  
   } 
 
+  
   /* movieList: any
 
   ngOnInit() {
